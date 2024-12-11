@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="schwarz.it.lws" target="21" />
+      <module name="schwarz.it.lws.SvelteAndSpringBoot" target="21" />
+      <module name="schwarz.it.lws.SvelteAndSpringBoot.test" target="21" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
