@@ -13,4 +13,5 @@ interface WeatherRepository : JpaRepository<WeatherData, Long> {
         startDate: LocalDateTime,
         endDate: LocalDateTime
     ): List<WeatherData>*/
+
 }
