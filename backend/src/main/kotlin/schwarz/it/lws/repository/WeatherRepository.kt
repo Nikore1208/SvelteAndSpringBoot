@@ -8,6 +8,9 @@ import java.time.LocalDateTime
 @Repository
 interface WeatherRepository : JpaRepository<WeatherData, Long> {
 
+    fun findByCity(city: String): List<WeatherData>
+
+
     /*fun findByCityAndForecastDataBetween(
         city: String,
         startDate: LocalDateTime,

@@ -31,26 +31,16 @@ class WeatherService(val weatherRepository: WeatherRepository) {
             minTemperature = mainData["temp_min"] as Double,
             maxTemperature = mainData["temp_max"] as Double
         )
-
         return weatherRepository.save(weatherData)
     }
 
     fun getForecast(city: String, days: Int): List<WeatherData> {
 
-        val forecastData = listOf(TESTWEATHERDATA)
+
+        saveWeather(city)
+        val forecastData = weatherRepository.findByCity(city)
         return forecastData
 
     }
 }
 
-
-val TESTWEATHERDATA = WeatherData(
-    city = "city",
-    forecastDate = LocalDateTime.now(), // Aktuelles Datum und Uhrzeit
-    temperature = 20.0,  // Beispieltemperatur
-    minTemperature = 15.0,  // Beispielminimum-Temperatur
-    maxTemperature = 25.0,  // Beispielmaximum-Temperatur
-    humidity = 60,  // Beispiel-Humidity-Wert
-    description = "Clear sky",  // Beispielwetterbeschreibung
-    iconCode = "01d"  // Beispiel-Icon-Code
-)
