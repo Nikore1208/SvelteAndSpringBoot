@@ -77,3 +77,24 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f0f0f0;
+}
+
+.rectangle {
+  width: 500px;
+  height: 150px;
+  background-color: #dddddd;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  border-radius: 10px;
+}
