@@ -5,14 +5,16 @@ import org.springframework.web.client.RestTemplate
 import org.springframework.web.client.getForObject
 import schwarz.it.lws.model.WeatherData
 import schwarz.it.lws.repository.WeatherRepository
+import java.time.Duration
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Service
 class WeatherService(val weatherRepository: WeatherRepository) {
     private val apiKey = "9eb6056c21bd7f742bff107b5794c961"
     private val apiUrl = "https://api.openweathermap.org/data/2.5/weather"
 
-    fun saveWeather(city: String): WeatherData {
+    fun saveWeatherInDatabase(city: String) {
         val restTemplate = RestTemplate()
         val url = "$apiUrl?q=$city&appid=$apiKey&units=metric&lang=de"
 
@@ -31,26 +33,32 @@ class WeatherService(val weatherRepository: WeatherRepository) {
             minTemperature = mainData["temp_min"] as Double,
             maxTemperature = mainData["temp_max"] as Double
         )
-
-        return weatherRepository.save(weatherData)
     }
 
-    fun getForecast(city: String, days: Int): List<WeatherData> {
+    fun getCurrentWeather(city: String): WeatherData {
+        if (weatherRepository.findTopByCityOrderByForecastDateDesc(city).forecastDate != null) {
 
-        val forecastData = listOf(TESTWEATHERDATA)
+        }
+
+        saveWeatherInDatabase(city)
+        val forecastData = weatherRepository.findTopByCityOrderByForecastDateDesc(city)
         return forecastData
 
     }
+
+
+
+    fun isOlderThanOneHour(timestamp: String): Boolean {
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS")
+
+        val parsedTimestamp = LocalDateTime.parse(timestamp, formatter)
+
+        val currentTime = LocalDateTime.now()
+
+        val duration = Duration.between(parsedTimestamp, currentTime)
+
+        return duration.toHours() > 1
+    }
+
 }
 
-
-val TESTWEATHERDATA = WeatherData(
-    city = "city",
-    forecastDate = LocalDateTime.now(), // Aktuelles Datum und Uhrzeit
-    temperature = 20.0,  // Beispieltemperatur
-    minTemperature = 15.0,  // Beispielminimum-Temperatur
-    maxTemperature = 25.0,  // Beispielmaximum-Temperatur
-    humidity = 60,  // Beispiel-Humidity-Wert
-    description = "Clear sky",  // Beispielwetterbeschreibung
-    iconCode = "01d"  // Beispiel-Icon-Code
-)

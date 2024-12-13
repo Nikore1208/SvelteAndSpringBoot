@@ -11,9 +11,16 @@ class WeatherController(private val weatherService: WeatherService) {
 
 
 
-    @GetMapping("/{city}")
+  /*  @GetMapping("/{city}")
     fun getWeatherForecast( @PathVariable city: String, @RequestParam days: Int): ResponseEntity<List<WeatherData>> {
         require(days in 1..5){"Anzahl der Tage muss zwischen 1 und 5 liegen"}
         return ResponseEntity.ok(weatherService.getForecast(city, days))
+    }*/
+
+    @GetMapping("/{city}")
+    fun getCurrentWeather( @PathVariable city: String): ResponseEntity<WeatherData> {
+        return ResponseEntity.ok(weatherService.getCurrentWeather(city))
     }
+
+
 }
