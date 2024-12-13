@@ -33,14 +33,15 @@ class WeatherService(val weatherRepository: WeatherRepository) {
             minTemperature = mainData["temp_min"] as Double,
             maxTemperature = mainData["temp_max"] as Double
         )
+
+        weatherRepository.save(weatherData)
     }
 
     fun getCurrentWeather(city: String): WeatherData {
-        if (weatherRepository.findTopByCityOrderByForecastDateDesc(city).forecastDate != null) {
-
+        if (!weatherRepository.existsByCity(city) || isOlderThanOneHour(weatherRepository.findTopByCityOrderByForecastDateDesc(city).forecastDate.toString())) {
+            saveWeatherInDatabase(city)
         }
 
-        saveWeatherInDatabase(city)
         val forecastData = weatherRepository.findTopByCityOrderByForecastDateDesc(city)
         return forecastData
 
@@ -49,7 +50,7 @@ class WeatherService(val weatherRepository: WeatherRepository) {
 
 
     fun isOlderThanOneHour(timestamp: String): Boolean {
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS")
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
 
         val parsedTimestamp = LocalDateTime.parse(timestamp, formatter)
 

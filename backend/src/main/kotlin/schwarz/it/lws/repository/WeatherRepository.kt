@@ -11,6 +11,7 @@ interface WeatherRepository : JpaRepository<WeatherData, Long> {
 
     fun findTopByCityOrderByForecastDateDesc(city: String): WeatherData
 
+    fun existsByCity(city: String): Boolean
 
     /*fun findByCityAndForecastDataBetween(
         city: String,
