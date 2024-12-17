@@ -12,6 +12,9 @@ import java.time.LocalDateTime
 data class ResponseWeatherData(
 
     @Column(nullable = false)
+    val date : LocalDateTime,
+
+    @Column(nullable = false)
     val temperature: Double,    //XX
 
     @Column(nullable = false)
