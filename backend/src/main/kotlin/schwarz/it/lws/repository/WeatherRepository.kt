@@ -1,10 +1,9 @@
 package schwarz.it.lws.repository
 
-import schwarz.it.lws.model.WeatherData
+import jakarta.transaction.Transactional
 import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
-import java.time.LocalDateTime
+import schwarz.it.lws.model.WeatherData
 
 @Repository
 interface WeatherRepository : JpaRepository<WeatherData, Long> {
@@ -13,10 +12,10 @@ interface WeatherRepository : JpaRepository<WeatherData, Long> {
 
     fun existsByCity(city: String): Boolean
 
-    /*fun findByCityAndForecastDataBetween(
-        city: String,
-        startDate: LocalDateTime,
-        endDate: LocalDateTime
-    ): List<WeatherData>*/
+    @Transactional
+    fun deleteByCity(city: String)
+
+    fun findAllByCity(city: String): List<WeatherData>
+
 
 }
