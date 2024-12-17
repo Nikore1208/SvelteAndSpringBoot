@@ -7,12 +7,13 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
 import org.hibernate.annotations.CreationTimestamp
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 data class ResponseWeatherData(
 
     @Column(nullable = false)
-    val date : LocalDateTime,
+    val date : LocalDate,
 
     @Column(nullable = false)
     val temperature: Double,    //XX
