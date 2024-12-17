@@ -64,6 +64,7 @@ class WeatherService(val weatherRepository: WeatherRepository) {
             .groupBy { it.forecastDate.toLocalDate() }
             .map { (date, entries) ->
                 ResponseWeatherData(
+                    date = LocalDateTime.now(),
                     description = "Durchschnittswerte - TODO",
                     temperature = Math.round(entries.map { it.temperature }.average() * 100) / 100.0,
                     minTemperature = entries.map {it.temperature }.min(),
