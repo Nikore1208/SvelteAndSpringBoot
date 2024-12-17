@@ -2,6 +2,7 @@ package schwarz.it.lws.controller
 
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import schwarz.it.lws.model.ResponseWeatherData
 import schwarz.it.lws.model.WeatherData
 import schwarz.it.lws.service.WeatherService
 
@@ -17,8 +18,8 @@ class WeatherController(private val weatherService: WeatherService) {
     }*/
 
     @GetMapping("/{city}")
-    fun getCurrentWeather(@PathVariable city: String): ResponseEntity<WeatherData> {
-        return ResponseEntity.ok(weatherService.getCurrentWeather(city))
+    fun getWeatherForecast(@PathVariable city: String): ResponseEntity<List<ResponseWeatherData>> {
+        return ResponseEntity.ok(weatherService.getWeatherForecast(city))
     }
 
 
