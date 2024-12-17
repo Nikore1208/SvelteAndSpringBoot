@@ -22,7 +22,7 @@ class WeatherService(val weatherRepository: WeatherRepository) {
         val response: Map<String, Any> = restTemplate.getForObject(url)
         val forecasts = response["list"] as List<Map<String, Any>>
 
-        for (i in 0 until (5*8)) {
+        for (i in 0 until (40)) {
             val forecast = forecasts[i]
             val mainData = forecast["main"] as Map<String, Any>
             val weatherInfo = (forecast["weather"] as List<Map<String, Any>>).first()
@@ -45,18 +45,18 @@ class WeatherService(val weatherRepository: WeatherRepository) {
         }
     }
 
-    fun getWeatherForecast(city: String): List<ResponseWeatherData> {
+    fun getWeatherForecast(city: String, days: Int): List<ResponseWeatherData> {
         if (!weatherRepository.existsByCity(city) || DateTimeUtils.isOlderThanThreeHours(weatherRepository.findTopByCityOrderByForecastDateDesc(city).forecastDate)) {
             weatherRepository.deleteByCity(city)
             saveWeatherInDatabase(city)
         }
 
-        val forecastData = calculateWeatherForecast(city)
+        val forecastData = calculateWeatherForecast(city, days)
         return forecastData
 
     }
 
-    fun calculateWeatherForecast(city: String): List<ResponseWeatherData> {
+    fun calculateWeatherForecast(city: String, days: Int): List<ResponseWeatherData> {
 
         var weatherList = weatherRepository.findAllByCity(city)
 
@@ -64,7 +64,7 @@ class WeatherService(val weatherRepository: WeatherRepository) {
             .groupBy { it.forecastDate.toLocalDate() }
             .map { (date, entries) ->
                 ResponseWeatherData(
-                    date = LocalDateTime.now(),
+                    date = date,
                     description = "Durchschnittswerte - TODO",
                     temperature = Math.round(entries.map { it.temperature }.average() * 100) / 100.0,
                     minTemperature = entries.map {it.temperature }.min(),
@@ -75,7 +75,7 @@ class WeatherService(val weatherRepository: WeatherRepository) {
             }
 
 
-        return weatherListPerDay
+        return weatherListPerDay.take(days)
     }
 
 
