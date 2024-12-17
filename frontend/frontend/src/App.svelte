@@ -1,83 +1,143 @@
 <script>
-  import WeatherCard from './lib/WeatherCard.svelte';
+    import WeatherCard from './lib/WeatherCard.svelte';
+    import ClearDay from './assets/clear-day.svg';
+    import ClearNight from './assets/clear-night.svg';
+    import Cloudy from './assets/cloudy.svg';
+    import PartlyCloudyDay from './assets/partly-cloudy-day.svg';
+    import Rain from './assets/rain.svg';
+    import Snow from './assets/snow.svg';
 
-  let city = '';
-  let weatherData = null;
-  let selectedDay = 0;
+    function getImage(weather) {
+        const code = weather.iconCode;
+        const isDay = true;
 
-  async function searchWeather() {
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=9eb6056c21bd7f742bff107b5794c961`);
-    if (!response.ok) {
-      alert('City not found or API error');
-      return;
+        if (code >= 200 && code < 300) return Rain;
+        if (code >= 300 && code < 600) return Rain;
+        if (code >= 600 && code < 700) return Snow;
+        if (code >= 700 && code < 800) return Cloudy;
+        if (code === 800) return isDay ? ClearDay : ClearNight;
+        if (code > 800) return isDay ? PartlyCloudyDay : Cloudy;
+
+        return Cloudy;
     }
-    const data = await response.json();
-    weatherData = data.list.filter((_, index) => index % 8 === 0);
-    console.log(weatherData)
-  }
 
-  function selectDay(index) {
-    selectedDay = index;
-  }
+
+    let city = '';
+
+    let {weatherData = []} = $props();
+
+    let selectedDay = 0;
+
+    async function searchWeather() {
+        const response = await fetch(`http://localhost:8080/api/weather/${city}`);
+        if (!response.ok) {
+            alert('City not found or API error');
+            return;
+        }
+        weatherData = await response.json();
+        console.log("####", weatherData)
+
+
+    }
+
+    function selectDay(index) {
+        selectedDay = index;
+    }
+
 </script>
 
-<style>
-  main {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  .search {
-    display: flex;
-    margin-bottom: 20px;
-  }
-  input {
-    flex-grow: 1;
-    padding: 10px;
-  }
-  button {
-    padding: 10px 20px;
-  }
-  .weather-container {
-    display: flex;
-    justify-content: space-between;
-  }
-  .forecast {
-    display: flex;
-    flex-direction: column;
-  }
-  .forecast button {
-    margin-bottom: 10px;
-  }
-  .active {
-    background-color: #007bff;
-    color: white;
-  }
-</style>
 
 <main>
-  <h1>Weather Forecast</h1>
+    <h1>Weather Forecast</h1>
 
-  <div class="search">
-    <input bind:value={city} placeholder="Enter city" />
-    <button on:click={searchWeather}>Search</button>
-  </div>
-
-
-  {#if weatherData}
-    <div class="weather-container">
-      <WeatherCard weather={weatherData[selectedDay]} />
-
-      <div class="forecast">
-        {#each weatherData as day, index}
-          <button class:active={index === selectedDay} on:click={() => selectDay(index)}>
-            {new Date(day.dt * 1000).toLocaleDateString()}
-          </button>
-        {/each}
-      </div>
+    <div class="search">
+        <input bind:value={city} placeholder="Enter city"/>
+        <button on:click={searchWeather}>Search</button>
     </div>
-  {/if}
-  <div>
-    <img src="./assets/clear-day.svg" alt="clear-day">
-  </div>
+
+    {#if weatherData}
+        <div class="weather-container">
+            <div class="forecast">
+                {#each weatherData as day, index}
+                    <WeatherCard weather={day}/>
+        <div class="weather-image">
+            <img src="{getImage(weatherData)}" alt="weather icon">
+        </div>
+                {/each}
+            </div>
+        </div>
+
+    {/if}
 </main>
+
+<style>
+    :global(body) {
+        background-image: url('background.jpeg');
+        font-family: 'Arial',sans-serif;
+        background-size: cover;
+        background-attachment: fixed;
+    }
+
+    main {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .search {
+        display: flex;
+        margin-bottom: 20px;
+    }
+
+    input {
+        flex-grow: 1;
+        padding: 12px 20px;
+        font-size: 16px;
+        border: 2px solid var(--primary-color);
+        border-radius: 25px 0 0 25px;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+
+    button {
+        padding: 10px 20px;
+    }
+
+    .weather-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        background-color: #c6e9ff;
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: 0 4px 6px dimgray;
+    }
+
+
+    .forecast {
+        background-color: transparent;
+        border-radius: 16px;
+        padding: 25px;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .forecast::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, transparent, var(--accent-color), transparent);
+        transform: rotate(-45deg);
+        opacity: 0.1;
+    }
+
+    .forecast:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+</style>

@@ -12,12 +12,12 @@
 </style>
 
 <div class="weather-card">
-    <h2>{new Date(weather.dt * 1000).toLocaleDateString()}</h2>
-    <p>Temperature: {weather.main.temp}°C</p>
-    <p>Min temperature: {weather.main.temp_min}°C</p>
-    <p>Max temperature: {weather.main.temp_max}°C</p>
-    <p>Humidity: {weather.main.humidity}%</p>
-    <p>Air Pressure: {weather.main.pressure} hPa</p>
-    <p>Description: {weather.weather[0].description}</p>
+<!--    <h2>{new Date(weather.dt * 1000).toLocaleDateString()}</h2>-->
+<!--    <h3>{new Date(weather.dt*1000).toLocaleTimeString()}</h3>-->
+    <p>Temperature: {weather.temperature}°C</p>
+    <p>Min temperature: {weather.minTemperature}°C</p>
+    <p>Max temperature: {weather.maxTemperature}°C</p>
+    <p>Humidity: {weather.humidity}%</p>
+    <p>Description: {weather.description}</p>
 </div>
 
