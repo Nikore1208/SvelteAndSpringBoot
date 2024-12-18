@@ -7,8 +7,10 @@ import schwarz.it.lws.repository.WeatherRepository
 
 class WeatherServiceTest : FunSpec({
 
+
+
  val weatherRepository = mockk<WeatherRepository>(relaxed = true)
- val weatherService = WeatherService(weatherRepository)
+ val weatherService = WeatherService(weatherRepository, apiUrl = "", apiKey = "")
 
     test("deleteAll") {
 
@@ -22,7 +24,6 @@ class WeatherServiceTest : FunSpec({
 
 
     test("getWeatherForecast"){
-
 
 
 
