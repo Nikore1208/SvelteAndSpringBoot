@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
 import org.hibernate.annotations.CreationTimestamp
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 @Entity
@@ -14,33 +15,36 @@ import java.time.LocalDateTime
 data class WeatherData(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null,
+    var id: Long? = null,
 
     @Column(nullable = false)
-    val city: String,
+    var city: String = "",
 
     @Column(nullable = false)
-    val forecastDate: LocalDateTime,
+    var forecastDate: LocalDateTime = LocalDateTime.now(),
 
     @Column(nullable = false)
-    val temperature: Double,
+    var temperature: Double = 0.0,
 
     @Column(nullable = false)
-    val minTemperature: Double,
+    var minTemperature: Double = 0.0,
 
     @Column(nullable = false)
-    val maxTemperature: Double,
+    var maxTemperature: Double = 0.0,
 
     @Column(nullable = false)
-    val humidity: Int,
+    var humidity: Int = 0,
 
     @Column(nullable = false)
-    val description: String,
+    var description: String = "",
 
     @Column(nullable = false)
-    val iconCode: String,
+    var iconCode: String = "",
 
     @Column(nullable = false)
     @CreationTimestamp
-    val createdAt: LocalDateTime = LocalDateTime.now()
+    var createdAt: LocalDateTime = LocalDateTime.now()
 )
+
+
+

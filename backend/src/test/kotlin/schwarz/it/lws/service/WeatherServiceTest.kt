@@ -1,35 +1,31 @@
 package schwarz.it.lws.service
 
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Test
-import org.springframework.boot.test.context.SpringBootTest
-import schwarz.it.lws.dateTimeUtils.DateTimeUtils
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.shouldBe
+import io.mockk.*
+import schwarz.it.lws.repository.WeatherRepository
 
-@SpringBootTest
-class DateTimeUtilsTest {
+class WeatherServiceTest : FunSpec({
 
-    val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+ val weatherRepository = mockk<WeatherRepository>(relaxed = true)
+ val weatherService = WeatherService(weatherRepository)
 
-    @Test
-    fun `isOlderThanOneHour should return true for timestamp older than three hours`() {
+    test("deleteAll") {
 
-        val timestamp = LocalDateTime.now().minusHours(5)
+     every { weatherRepository.deleteAll() } just Runs
 
-        val result = DateTimeUtils.isOlderThanThreeHours(timestamp)
+     weatherService.deleteAll()
 
-        assertTrue(result)
+     verify { weatherRepository.deleteAll() }
+
     }
 
-    @Test
-    fun `isOlderThanOneHour should return false for timestamp less than three hours`(){
 
-        val timestamp = LocalDateTime.now().minusHours(2)
+    test("getWeatherForecast"){
 
-        val result = DateTimeUtils.isOlderThanThreeHours(timestamp)
 
-        assertFalse(result)
+
+
     }
 
-}
+})
