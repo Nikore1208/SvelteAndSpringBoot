@@ -1,36 +1,31 @@
 package schwarz.it.lws.model
 
 import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.Table
-import org.hibernate.annotations.CreationTimestamp
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 data class ResponseWeatherData(
 
     @Column(nullable = false)
-    val date : LocalDate,
+    var date: LocalDate = LocalDate.now(),
 
     @Column(nullable = false)
-    val temperature: Double,    //XX
+    var temperature: Double = 0.0,    //XX
 
     @Column(nullable = false)
-    val minTemperature: Double,   //XX
+    var minTemperature: Double = 0.0,   //XX
 
     @Column(nullable = false)
-    val maxTemperature: Double,  //XX
+    var maxTemperature: Double = 0.0,  //XX
 
     @Column(nullable = false)
-    val humidity: Int,           //XXX
+    var humidity: Int = 0,           //XXX
 
     @Column(nullable = false)
-    val description: String,      //XX
+    var description: String = "",      //XX
 
     @Column(nullable = false)
-    val iconCode: String,         //XX
+    var iconCode: String = "",         //XX
 
 )
+
+

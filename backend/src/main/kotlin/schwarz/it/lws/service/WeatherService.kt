@@ -49,11 +49,9 @@ class WeatherService(val weatherRepository: WeatherRepository) {
         if (!weatherRepository.existsByCity(city) || DateTimeUtils.isOlderThanThreeHours(weatherRepository.findTopByCityOrderByForecastDateDesc(city).forecastDate)) {
             weatherRepository.deleteByCity(city)
             saveWeatherInDatabase(city)
+            return calculateWeatherForecast(city, days)
         }
-
-        val forecastData = calculateWeatherForecast(city, days)
-        return forecastData
-
+        return calculateWeatherForecast(city, days)
     }
 
     fun calculateWeatherForecast(city: String, days: Int): List<ResponseWeatherData> {
@@ -65,12 +63,12 @@ class WeatherService(val weatherRepository: WeatherRepository) {
             .map { (date, entries) ->
                 ResponseWeatherData(
                     date = date,
-                    description = "Durchschnittswerte - TODO",
+                    description = entries.map { it.description }.first().toString(), // TODO
                     temperature = Math.round(entries.map { it.temperature }.average() * 100) / 100.0,
-                    minTemperature = entries.map {it.temperature }.min(),
-                    maxTemperature = entries.map {it.temperature }.max(),
+                    minTemperature = entries.map {it.minTemperature }.min(),
+                    maxTemperature = entries.map {it.maxTemperature }.max(),
                     humidity = entries.map {it.humidity}.average().toInt(),
-                    iconCode = "TODO",
+                    iconCode = entries.map { it.iconCode }.first().toString(),       //Todo
                 )
             }
 
@@ -79,6 +77,9 @@ class WeatherService(val weatherRepository: WeatherRepository) {
     }
 
 
+    fun deleteAll(){
+        weatherRepository.deleteAll()
+    }
 
 
 }

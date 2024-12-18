@@ -18,4 +18,5 @@ interface WeatherRepository : JpaRepository<WeatherData, Long> {
     fun findAllByCity(city: String): List<WeatherData>
 
 
+
 }
