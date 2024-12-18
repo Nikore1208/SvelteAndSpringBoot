@@ -63,14 +63,15 @@ class WeatherService(val weatherRepository: WeatherRepository) {
             .map { (date, entries) ->
                 ResponseWeatherData(
                     date = date,
-                    description = "Durchschnittswerte - TODO",
+                    description = entries.map { it.description }.first().toString(), // TODO
                     temperature = Math.round(entries.map { it.temperature }.average() * 100) / 100.0,
                     minTemperature = entries.map {it.minTemperature }.min(),
                     maxTemperature = entries.map {it.maxTemperature }.max(),
                     humidity = entries.map {it.humidity}.average().toInt(),
-                    iconCode = "TODO",
+                    iconCode = entries.map { it.iconCode }.first().toString(),       //Todo
                 )
             }
+
 
         return weatherListPerDay.take(days)
     }

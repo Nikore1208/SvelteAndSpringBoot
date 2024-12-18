@@ -20,7 +20,7 @@ class WeatherController(private val weatherService: WeatherService) {
     }
 
 
-    @GetMapping("/DELETE/ALL")
+    @DeleteMapping
     fun deleteWeather(){
         weatherService.deleteAll()
     }
