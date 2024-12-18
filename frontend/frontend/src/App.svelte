@@ -1,22 +1,19 @@
 <script>
     import WeatherCard from './lib/WeatherCard.svelte';
     import ClearDay from './assets/clear-day.svg';
-    import ClearNight from './assets/clear-night.svg';
     import Cloudy from './assets/cloudy.svg';
-    import PartlyCloudyDay from './assets/partly-cloudy-day.svg';
     import Rain from './assets/rain.svg';
     import Snow from './assets/snow.svg';
 
+
     function getImage(weather) {
         const code = weather.iconCode;
-        const isDay = true;
+        const firstTwoChars = code.slice(0, 2);
 
-        if (code >= 200 && code < 300) return Rain;
-        if (code >= 300 && code < 600) return Rain;
-        if (code >= 600 && code < 700) return Snow;
-        if (code >= 700 && code < 800) return Cloudy;
-        if (code === 800) return isDay ? ClearDay : ClearNight;
-        if (code > 800) return isDay ? PartlyCloudyDay : Cloudy;
+        if (firstTwoChars === '01') return ClearDay;
+        if (['02', '03', '04'].includes(firstTwoChars)) return Cloudy;
+        if (['09', '10', '11'].includes(firstTwoChars)) return Rain;
+        if (firstTwoChars === '13') return Snow;
 
         return Cloudy;
     }
@@ -26,8 +23,6 @@
 
     let {weatherData = []} = $props();
 
-    let selectedDay = 0;
-
     async function searchWeather() {
         const response = await fetch(`http://localhost:8080/api/weather/${city}`);
         if (!response.ok) {
@@ -35,15 +30,7 @@
             return;
         }
         weatherData = await response.json();
-        console.log("####", weatherData)
-
-
     }
-
-    function selectDay(index) {
-        selectedDay = index;
-    }
-
 </script>
 
 
@@ -56,13 +43,10 @@
     </div>
 
     {#if weatherData}
-        <div class="weather-container">
+        <div class="weather-container" class:hidden={!weatherData || weatherData.length === 0}>
             <div class="forecast">
                 {#each weatherData as day, index}
-                    <WeatherCard weather={day}/>
-        <div class="weather-image">
-            <img src="{getImage(weatherData)}" alt="weather icon">
-        </div>
+                    <WeatherCard weather={day} icon={getImage(day)}/>
                 {/each}
             </div>
         </div>
@@ -89,6 +73,10 @@
         margin-bottom: 20px;
     }
 
+    .hidden {
+        display: none;
+    }
+
     input {
         flex-grow: 1;
         padding: 12px 20px;
@@ -104,7 +92,6 @@
     }
 
     .weather-container {
-        display: grid;
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 20px;
         background-color: #c6e9ff;
