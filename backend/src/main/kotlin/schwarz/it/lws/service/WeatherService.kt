@@ -24,6 +24,12 @@ class WeatherService(
         saveWeatherInDatabase(city, forecasts)
     }
 
+    fun fetchWeatherData(city: String): Map<String, Any> {
+        val restTemplate = RestTemplate()
+        val url = "$apiUrl?q=$city&appid=$apiKey&units=metric&lang=de"
+        return restTemplate.getForObject(url)
+    }
+
     fun extractForecasts(response: Map<String, Any>): List<Map<String, Any>> {
         return response["list"] as List<Map<String, Any>>
     }
@@ -37,11 +43,11 @@ class WeatherService(
             city = city,
             forecastDate = LocalDateTime.parse(forecastDateTime!!.replace(" ", "T")),
             description = weatherInfo["description"] as String,
-            temperature = mainData["temp"] as Double,
+            temperature = (mainData["temp"] as Number).toDouble(),
             humidity = mainData["humidity"] as Int,
             iconCode = weatherInfo["icon"] as String,
-            minTemperature = mainData["temp_min"] as Double,
-            maxTemperature = mainData["temp_max"] as Double
+            minTemperature = (mainData["temp_min"] as Number).toDouble(),
+            maxTemperature = (mainData["temp_max"] as Number).toDouble()
         )
     }
 
@@ -50,12 +56,6 @@ class WeatherService(
             val weatherData = mapToWeatherData(city, forecast)
             weatherRepository.save(weatherData)
         }
-    }
-
-    fun fetchWeatherData(city: String): Map<String, Any> {
-        val restTemplate = RestTemplate()
-        val url = "$apiUrl?q=$city&appid=$apiKey&units=metric&lang=de"
-        return restTemplate.getForObject(url)
     }
 
 
