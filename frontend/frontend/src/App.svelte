@@ -68,7 +68,7 @@
 
 <style>
     :global(body) {
-        background-image: url('background.jpeg');
+        background-image: url('src/assets/cloudyBackground.jpeg');
         font-family: 'Arial', sans-serif;
         background-size: cover;
         background-attachment: fixed;
