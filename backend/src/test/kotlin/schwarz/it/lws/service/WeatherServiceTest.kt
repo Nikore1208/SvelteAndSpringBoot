@@ -23,7 +23,7 @@ class WeatherServiceTest : FunSpec({
     }
 
 
-    test("getWeatherForecast"){
+    test("mapToWeatherData"){
 
 
 
