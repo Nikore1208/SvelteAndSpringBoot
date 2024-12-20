@@ -6,7 +6,7 @@
 <div class="weather-card">
     <div class="weather-header">
         <h2>{new Date(weather.date).toLocaleDateString()}</h2>
-        <img src={icon} alt="weather icon" class="weather-icon" />
+        <img src={icon} alt="weather icon" class="weather-icon"/>
     </div>
     <div class="weather-details">
         <p><strong>Temperature:</strong> {weather.temperature}°C</p>
@@ -28,6 +28,11 @@
         font-family: 'Arial', sans-serif;
         margin: 15px;
         border: 1px solid #c0d9f7;
+    }
+
+    .weather-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 1);
     }
 
     .weather-header {
@@ -65,11 +70,5 @@
         color: #333;
     }
 
-    .weather-details .temperature {
-        color: #5f8ca3;
-    }
-    .weather-details .humidity {
-        color: #84a9c0;
-    }
 
 </style>
