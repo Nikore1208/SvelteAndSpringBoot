@@ -8,6 +8,7 @@ import schwarz.it.lws.dateTimeUtils.DateTimeUtils
 import schwarz.it.lws.model.ResponseWeatherData
 import schwarz.it.lws.model.WeatherData
 import schwarz.it.lws.repository.WeatherRepository
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 @Service
@@ -80,14 +81,14 @@ class WeatherService(
             ResponseWeatherData(
                 date = date,
                 description = entries.map { it.description }.first().toString(), // TODO
-                temperature = if(entries == weatherList.firstOrNull()) {
-                    Math.round(entries.map { it.temperature }.first() * 100) / 100.0
+                temperature = if(date == LocalDate.now()) {
+                    Math.round(entries.map { it.temperature }.first() * 10) / 10.0
                 }else{
-                    entries.map { it.temperature }.average()
+                    Math.round(entries.map { it.temperature }.average()* 10) / 10.0
                 },
                 minTemperature = entries.map { it.minTemperature }.min(),
                 maxTemperature = entries.map { it.maxTemperature }.max(),
-                humidity = if(entries == weatherList.firstOrNull()) {
+                humidity = if(date == LocalDate.now()) {
                     entries.map { it.humidity }.first()
                 }else{
                     entries.map { it.humidity }.average().toInt()
