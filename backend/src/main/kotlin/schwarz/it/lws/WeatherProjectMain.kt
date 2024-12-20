@@ -9,6 +9,4 @@ class WeatherProjectMain
 
 fun main(args: Array<String>) {
 	runApplication<WeatherProjectMain>(*args)
-
-	//println(weatherService.getForecast("Heilbronn", 1))
 }

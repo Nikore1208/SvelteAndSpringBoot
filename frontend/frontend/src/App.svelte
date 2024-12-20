@@ -101,30 +101,4 @@
     }
 
 
-    .forecast {
-        background-color: transparent;
-        border-radius: 16px;
-        padding: 25px;
-        text-align: center;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .forecast::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: linear-gradient(45deg, transparent, var(--accent-color), transparent);
-        transform: rotate(-45deg);
-        opacity: 0.1;
-    }
-
-    .forecast:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-    }
 </style>
