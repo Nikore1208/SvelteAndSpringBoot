@@ -4,19 +4,73 @@
 </script>
 
 <div class="weather-card">
-    <h2>{new Date(weather.date).toLocaleDateString()}</h2>
-    <p>Temperature: {weather.temperature}°C </p>
-    <p>Min temperature: {weather.minTemperature}°C</p>
-    <p>Max temperature: {weather.maxTemperature}°C</p>
-    <p>Humidity: {weather.humidity}%</p>
-    <p>Description: {weather.description}<img src={icon} alt="weather icon" class="weather-icon"></p>
+    <div class="weather-header">
+        <h2>{new Date(weather.date).toLocaleDateString()}</h2>
+        <img src={icon} alt="weather icon" class="weather-icon" />
+    </div>
+    <div class="weather-details">
+        <p><strong>Temperature:</strong> {weather.temperature}°C</p>
+        <p><strong>Min:</strong> {weather.minTemperature}°C</p>
+        <p><strong>Max:</strong> {weather.maxTemperature}°C</p>
+        <p><strong>Humidity:</strong> {weather.humidity}%</p>
+        <p><strong>Description:</strong> {weather.description}</p>
+    </div>
 </div>
 
 <style>
-    .weather-icon {
-        width: 60px;
-        height: 60px;
-        vertical-align: middle;
-        margin-left: 5px;
+    .weather-card {
+        background: linear-gradient(135deg, #a2c2e4, #d3e5f7); /* Sanfter Hellblauer Farbverlauf */
+        color: #333; /* Dunkles Text für bessere Lesbarkeit */
+        border-radius: 12px;
+        padding: 20px;
+        max-width: 320px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtiler Schatten für Tiefe */
+        font-family: 'Arial', sans-serif;
+        margin: 15px;
+        border: 1px solid #c0d9f7; /* Dezenter Rand in leichtem Blau */
     }
+
+    .weather-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 2px solid #b0c9e7; /* Leichtes Blau für die Trennung */
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+    }
+
+    h2 {
+        margin: 0;
+        font-size: 1.4em;
+        color: #5f8ca3; /* Gedämpftes Blau für das Datum */
+    }
+
+    .weather-icon {
+        width: 50px;
+        height: 50px;
+    }
+
+    .weather-details p {
+        margin: 8px 0;
+        line-height: 1.5;
+        font-size: 1.1em;
+    }
+
+    .weather-details strong {
+        font-weight: bold;
+        color: #5f8ca3; /* Gedämpftes Blau für Labels */
+    }
+
+    .weather-details p {
+        color: #333; /* Standard Textfarbe */
+    }
+
+    /* Optional: Farbige Hintergründe für bestimmte Werte */
+    .weather-details .temperature {
+        color: #5f8ca3; /* Gleiches Blau für die Temperatur */
+    }
+    .weather-details .humidity {
+        color: #84a9c0; /* Leicht gedämpftes Blau für die Luftfeuchtigkeit */
+    }
+
 </style>
