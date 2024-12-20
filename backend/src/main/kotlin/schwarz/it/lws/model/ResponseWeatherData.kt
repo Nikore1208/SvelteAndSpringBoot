@@ -9,7 +9,7 @@ data class ResponseWeatherData(
     var date: LocalDate = LocalDate.now(),
 
     @Column(nullable = false)
-    var temperature: Double = 0.0,    //XX
+    var temperature: Any = 0.0,    //XX
 
     @Column(nullable = false)
     var minTemperature: Double = 0.0,   //XX

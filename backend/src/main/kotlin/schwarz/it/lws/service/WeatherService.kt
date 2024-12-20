@@ -80,10 +80,18 @@ class WeatherService(
             ResponseWeatherData(
                 date = date,
                 description = entries.map { it.description }.first().toString(), // TODO
-                temperature = Math.round(entries.map { it.temperature }.average() * 100) / 100.0,
+                temperature = if(entries == weatherList.firstOrNull()) {
+                    Math.round(entries.map { it.temperature }.first() * 100) / 100.0
+                }else{
+                    entries.map { it.temperature }.average()
+                },
                 minTemperature = entries.map { it.minTemperature }.min(),
                 maxTemperature = entries.map { it.maxTemperature }.max(),
-                humidity = entries.map { it.humidity }.average().toInt(),
+                humidity = if(entries == weatherList.firstOrNull()) {
+                    entries.map { it.humidity }.first()
+                }else{
+                    entries.map { it.humidity }.average().toInt()
+                },
                 iconCode = entries.map { it.iconCode }.first().toString(),       //Todo
             )
         }
