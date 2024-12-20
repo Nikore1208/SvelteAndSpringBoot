@@ -19,22 +19,22 @@
 
 <style>
     .weather-card {
-        background: linear-gradient(135deg, #a2c2e4, #d3e5f7); /* Sanfter Hellblauer Farbverlauf */
-        color: #333; /* Dunkles Text für bessere Lesbarkeit */
+        background: linear-gradient(135deg, #a2c2e4, #d3e5f7);
+        color: #333;
         border-radius: 12px;
         padding: 20px;
         max-width: 320px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtiler Schatten für Tiefe */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         font-family: 'Arial', sans-serif;
         margin: 15px;
-        border: 1px solid #c0d9f7; /* Dezenter Rand in leichtem Blau */
+        border: 1px solid #c0d9f7;
     }
 
     .weather-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-bottom: 2px solid #b0c9e7; /* Leichtes Blau für die Trennung */
+        border-bottom: 2px solid #b0c9e7;
         padding-bottom: 10px;
         margin-bottom: 15px;
     }
@@ -42,7 +42,7 @@
     h2 {
         margin: 0;
         font-size: 1.4em;
-        color: #5f8ca3; /* Gedämpftes Blau für das Datum */
+        color: #5f8ca3;
     }
 
     .weather-icon {
@@ -58,19 +58,18 @@
 
     .weather-details strong {
         font-weight: bold;
-        color: #5f8ca3; /* Gedämpftes Blau für Labels */
+        color: #5f8ca3;
     }
 
     .weather-details p {
-        color: #333; /* Standard Textfarbe */
+        color: #333;
     }
 
-    /* Optional: Farbige Hintergründe für bestimmte Werte */
     .weather-details .temperature {
-        color: #5f8ca3; /* Gleiches Blau für die Temperatur */
+        color: #5f8ca3;
     }
     .weather-details .humidity {
-        color: #84a9c0; /* Leicht gedämpftes Blau für die Luftfeuchtigkeit */
+        color: #84a9c0;
     }
 
 </style>
