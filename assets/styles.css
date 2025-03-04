@@ -1,3 +1,36 @@
+#app {
+  background-color: #67cefd;
+  border: 2px solid #333;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(228, 230, 231, 0.014);
+}
+
+#app h1 {
+  color: #2c3e50;
+  font-family: Arial, sans-serif;
+  font-size: 24px;
+  text-align: center;
+}
+
+#secondApp {
+  background-color: #29d39a;
+  border: 2px dashed #0066cc;
+  border-radius: 15px;
+  padding: 25px;
+  margin-top: 20px;
+  box-shadow: 0 6px 12px rgba(0,102,204,0.2);
+}
+
+#secondApp h1 {
+  color: #0066cc;
+  font-family: 'Helvetica Neue', Helvetica, sans-serif;
+  font-size: 28px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
 body {
   background-color: #f2f2f2;
   margin: 0px;
